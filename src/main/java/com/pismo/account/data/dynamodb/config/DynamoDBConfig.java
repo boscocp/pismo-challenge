@@ -12,7 +12,7 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 
 @Configuration
 @EnableDynamoDBRepositories
-  (basePackages = "com.baeldung.spring.data.dynamodb.repositories")
+  (basePackages = "com.pismo.account.data.dynamodb.repositories")
 public class DynamoDBConfig {
 
     @Value("${amazon.dynamodb.endpoint}")
