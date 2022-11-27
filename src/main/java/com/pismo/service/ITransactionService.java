@@ -1,4 +1,4 @@
-package com.pimso.service;
+package com.pismo.service;
 
 public interface ITransactionService {
     

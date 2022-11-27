@@ -18,3 +18,12 @@ services:
       - ${TEMPDIR:-/tmp/localstack}:/tmp/localstack
       - /var/run/docker.sock:/var/run/docker.sock
       - ./script/localstack/dynamodb/init-dynamodb.sh:/docker-entrypoint-initaws.d/init-dynamodb.sh
+  # app:
+  #   image: 'account:latest'
+  #   build:
+  #     context: .
+  #   container_name: app
+  #   ports:
+  #     - '4200:4200'
+  #   depends_on:
+  #     - localstack

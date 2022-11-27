@@ -1,6 +1,6 @@
-package com.pimso.service;
+package com.pismo.service;
 
-import com.baeldung.dynamodb.models.AccountDTO;
+import com.pismo.dynamodb.models.AccountDTO;
 
 import java.util.List;
 

@@ -8,13 +8,17 @@ import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
 import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 import com.amazonaws.services.dynamodbv2.model.ResourceInUseException;
 import com.baeldung.dynamodb.rule.LocalDbCreationRule;
-import com.pimso.dynamodb.entity.Account;
-import com.pimso.dynamodb.repository.AccountRepository;
+import com.pismo.dynamodb.entity.Account;
+import com.pismo.dynamodb.models.AccountDTO;
+import com.pismo.dynamodb.repository.AccountRepository;
+import com.pismo.service.IAccountService;
+// import com.pismo.service.AccountServiceImplementation;
+import com.pismo.Application;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
-import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,6 +34,15 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
 
+
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.junit.runner.RunWith;
+import org.junit.Test;
+
 public class AccountRepositoryIntegrationTest {
 
     @ClassRule
@@ -38,17 +51,18 @@ public class AccountRepositoryIntegrationTest {
     private static DynamoDBMapper dynamoDBMapper;
     private static AmazonDynamoDB amazonDynamoDB;
 
-    private AccountRepository repository;
+    AccountRepository repository;
 
     private static final String DYNAMODB_ENDPOINT = "amazon.dynamodb.endpoint";
     private static final String AWS_ACCESSKEY = "amazon.aws.accesskey";
     private static final String AWS_SECRETKEY = "amazon.aws.secretkey";
 
-    private static final String EXPECTED_COST = "20";
-    private static final String EXPECTED_PRICE = "50";
+    private static final String DOCUMENT_NUMBER = "123123";
+    private static final String METADATA = "metadata";
 
     @BeforeClass
     public static void setupClass() {
+        
         Properties testProperties = loadFromFileInClasspath("test.properties")
                 .filter(properties -> !isEmpty(properties.getProperty(AWS_ACCESSKEY)))
                 .filter(properties -> !isEmpty(properties.getProperty(AWS_SECRETKEY)))
@@ -66,6 +80,7 @@ public class AccountRepositoryIntegrationTest {
 
     @Before
     public void setup() {
+        
         try {
             repository = new AccountRepository();
             repository.setMapper(dynamoDBMapper);
@@ -86,13 +101,15 @@ public class AccountRepositoryIntegrationTest {
     @Test
     public void givenItemWithExpectedCost_whenRunFindAll_thenItemIsFound() {
 
-        Account account = new Account(EXPECTED_COST, EXPECTED_PRICE);
+        Account account = new Account(DOCUMENT_NUMBER, METADATA);
         repository.save(account);
 
         List<Account> result = (List<Account>) repository.findAll();
         assertThat(result.size(), is(greaterThan(0)));
-        assertThat(result.get(0).getDocumentNumber(), is(equalTo(EXPECTED_COST)));
+        assertThat(result.get(0).getDocumentNumber(), is(equalTo(DOCUMENT_NUMBER)));
     }
+
+    
 
     private static boolean isEmpty(String inputString) {
         return inputString == null || "".equals(inputString);
