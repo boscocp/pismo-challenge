@@ -1,7 +1,10 @@
-package com.baeldung.service;
+package com.pimso.service;
 
 import java.util.Objects;
 // TODO mudar tudo pra estrutura da conta, implementar interface do servico, depois servico
-public class AccountService {
+
+// @Service
+// @Transactional
+public class AccountServiceImplementation {
     
 }

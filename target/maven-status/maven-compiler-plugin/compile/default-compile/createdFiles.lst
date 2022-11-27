@@ -1,0 +1,8 @@
+com/pimso/service/AccountServiceImplementation.class
+com/pimso/dynamodb/repository/AccountRepository.class
+com/pimso/dynamodb/entity/Account.class
+com/pimso/service/IAccountService.class
+com/pimso/dynamodb/repository/AbstractRepository.class
+com/pimso/service/ITransactionService.class
+com/baeldung/dynamodb/models/AccountDTO.class
+com/pimso/service/IOperationService.class

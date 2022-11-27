@@ -1,4 +1,4 @@
-package com.baeldung.dynamodb.repository;
+package com.pimso.dynamodb.repository;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;

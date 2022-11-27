@@ -7,9 +7,10 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
 import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 import com.amazonaws.services.dynamodbv2.model.ResourceInUseException;
-import com.baeldung.dynamodb.entity.Account;
-import com.baeldung.dynamodb.repository.AccountRepository;
 import com.baeldung.dynamodb.rule.LocalDbCreationRule;
+import com.pimso.dynamodb.entity.Account;
+import com.pimso.dynamodb.repository.AccountRepository;
+
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -90,7 +91,7 @@ public class AccountRepositoryIntegrationTest {
 
         List<Account> result = (List<Account>) repository.findAll();
         assertThat(result.size(), is(greaterThan(0)));
-        assertThat(result.get(0).getCost(), is(equalTo(EXPECTED_COST)));
+        assertThat(result.get(0).getDocumentNumber(), is(equalTo(EXPECTED_COST)));
     }
 
     private static boolean isEmpty(String inputString) {
