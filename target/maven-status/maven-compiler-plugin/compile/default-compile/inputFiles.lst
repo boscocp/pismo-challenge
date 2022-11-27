@@ -1,2 +1,4 @@
-/home/oem/Documentos/projetos/pismo-challenge/src/main/java/com/pismo/account/data/dynamodb/config/DynamoDBConfig.java
-/home/oem/Documentos/projetos/pismo-challenge/src/main/java/com/pismo/account/AccountApplication.java
+/home/oem/Documentos/projetos/pismo-challenge/src/main/java/com/baeldung/dynamodb/repository/AccountRepository.java
+/home/oem/Documentos/projetos/pismo-challenge/src/main/java/com/baeldung/dynamodb/repository/AbstractRepository.java
+/home/oem/Documentos/projetos/pismo-challenge/src/main/java/com/baeldung/service/AccountService.java
+/home/oem/Documentos/projetos/pismo-challenge/src/main/java/com/baeldung/dynamodb/entity/Account.java
