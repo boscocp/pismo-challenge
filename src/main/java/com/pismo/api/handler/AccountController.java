@@ -9,17 +9,22 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 public class AccountController {
-    
+
     AccountRepository repository;
 
     @PostMapping("/account")
     public ResponseEntity<String> createAccount(@RequestBody AccountDTO dto) {
-        Account account = new Account(dto.getDocumentNumber(), dto.getSk());
-        System.out.println(account);
-        this.repository.save(account);
-        return ResponseEntity.ok().body("teste");
+        // Account account = new Account(dto.getDocumentNumber(), dto.getSk());
+        // System.out.println(account);
+        // this.repository.save(account);
+        return ResponseEntity.ok().body("Hello client");
+    }
+
+    @RequestMapping("/handle")
+    public ResponseEntity<String> handle() {
+        return ResponseEntity.ok().body("Hello World");
     }
 }
