@@ -3,3 +3,4 @@ curl -X POST -H "Content-Type: application/json" -d "{ \"documentNumber\": \"123
 aws --endpoint-url=http://localhost:4566 --region=us-east-1  dynamodb list-tables
 
 aws --endpoint-url=http://localhost:4566 --region=us-east-1 dynamodb scan --table-name pismo-account
+
