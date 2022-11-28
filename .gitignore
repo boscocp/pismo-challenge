@@ -40,6 +40,10 @@ bin/
 # Log file
 *.log
 
+# Log file
+*.so
+*.dll
+
 # BlueJ files
 *.ctxt
 
