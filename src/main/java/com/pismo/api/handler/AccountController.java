@@ -5,6 +5,11 @@ import com.pismo.dynamodb.models.AccountDTO;
 import com.pismo.dynamodb.entity.Account;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 // import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,18 +18,19 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class AccountController {
 
+    @Autowired
     AccountRepository repository;
 
-    @PostMapping("/account")
+    @PostMapping(value = "/account", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> createAccount(@RequestBody AccountDTO dto) {
-        // Account account = new Account(dto.getDocumentNumber(), dto.getSk());
-        // System.out.println(account);
-        // this.repository.save(account);
+        Account account = new Account(dto.getDocumentNumber(), dto.getSk());
+        this.repository.save(account);
         return ResponseEntity.ok().body("Hello client");
     }
 
-    @RequestMapping("/handle")
-    public ResponseEntity<String> handle() {
-        return ResponseEntity.ok().body("Hello World");
+    @RequestMapping("/account")
+    public ResponseEntity<List<Account>> handle() {
+        List<Account> result = (List<Account>) repository.findAll();
+        return ResponseEntity.ok().body(result);
     }
 }
