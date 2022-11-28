@@ -4,6 +4,8 @@ import com.amazonaws.services.dynamodbv2.local.main.ServerRunner;
 import com.amazonaws.services.dynamodbv2.local.server.DynamoDBProxyServer;
 import org.junit.rules.ExternalResource;
 
+import java.util.Optional;
+
 public class LocalDbCreationRule extends ExternalResource {
 
     protected DynamoDBProxyServer server;
@@ -15,7 +17,7 @@ public class LocalDbCreationRule extends ExternalResource {
     @Override
     protected void before() throws Exception {
         String port = "8000";
-        this.server = ServerRunner.createServerFromCommandLineArgs(new String[]{"-inMemory","-sharedDb" ,"-port", port});
+        this.server = ServerRunner.createServerFromCommandLineArgs(new String[]{"-inMemory", "-port", port});
         server.start();
     }
 
