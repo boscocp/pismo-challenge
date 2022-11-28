@@ -9,10 +9,16 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 
+import lombok.Data;
+
+@Data
 @Configuration
 @EnableDynamoDBRepositories(basePackages = "com.pismo.dynamodb.repository")
 public class DynamoDBConfig {
@@ -25,17 +31,21 @@ public class DynamoDBConfig {
 
     @Value("${amazon.aws.secretkey}")
     private String amazonAWSSecretKey;
-    
+
     @Autowired
     private ApplicationContext context;
 
-    @Bean
+    @Bean(name = "amazonDynamoDB")
     public AmazonDynamoDB amazonDynamoDB() {
-        AmazonDynamoDB amazonDynamoDB = new AmazonDynamoDBClient(amazonAWSCredentials());
-        if (!amazonDynamoDBEndpoint.isEmpty()) {
-            amazonDynamoDB.setEndpoint(amazonDynamoDBEndpoint);
-        }
-        return amazonDynamoDB;
+        // AmazonDynamoDB amazonDynamoDB = new AmazonDynamoDBClient(amazonAWSCredentials());
+        // if (!amazonDynamoDBEndpoint.isEmpty()) {
+        //     amazonDynamoDB.setEndpoint(amazonDynamoDBEndpoint);
+        // }
+        // return amazonDynamoDB;
+        return AmazonDynamoDBClientBuilder.standard()
+        .withCredentials(getCredentialsProvider())
+        .withEndpointConfiguration(getEndpointConfiguration(amazonDynamoDBEndpoint))
+        .build();
     }
 
     @Bean
@@ -43,8 +53,21 @@ public class DynamoDBConfig {
         return new BasicAWSCredentials(amazonAWSAccessKey, amazonAWSSecretKey);
     }
 
+    private EndpointConfiguration getEndpointConfiguration(String url) {
+        return new EndpointConfiguration(url, "us-east-1");
+    }
+
+    private AWSStaticCredentialsProvider getCredentialsProvider() {
+        return new AWSStaticCredentialsProvider(getBasicAWSCredentials());
+    }
+
     @Bean(name = "mvcHandlerMappingIntrospectorCustom")
-	public HandlerMappingIntrospector mvcHandlerMappingIntrospectorCustom() {
-		return new HandlerMappingIntrospector(context);
-	}
+    public HandlerMappingIntrospector mvcHandlerMappingIntrospectorCustom() {
+        return new HandlerMappingIntrospector(context);
+    }
+
+    private BasicAWSCredentials getBasicAWSCredentials() {
+        return new BasicAWSCredentials(amazonAWSAccessKey, amazonAWSSecretKey);
+      
+    }
 }
