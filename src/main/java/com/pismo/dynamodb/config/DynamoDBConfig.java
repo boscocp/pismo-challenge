@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 import com.amazonaws.auth.AWSCredentials;
@@ -15,12 +16,17 @@ import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverterFactory;
+import com.amazonaws.services.dynamodbv2.document.DynamoDB;
+import com.pismo.dynamodb.repository.AccountRepository;
 
 import lombok.Data;
 
 @Data
 @Configuration
-@EnableDynamoDBRepositories(basePackages = "com.pismo.dynamodb.repository")
+@EnableDynamoDBRepositories(basePackageClasses = AccountRepository.class)
 public class DynamoDBConfig {
 
     @Value("${amazon.dynamodb.endpoint}")
@@ -35,17 +41,48 @@ public class DynamoDBConfig {
     @Autowired
     private ApplicationContext context;
 
-    @Bean(name = "amazonDynamoDB")
+    // @Bean(name = "amazonDynamoDB")
+    // public AmazonDynamoDB amazonDynamoDB() {
+    //     // AmazonDynamoDB amazonDynamoDB = new AmazonDynamoDBClient(amazonAWSCredentials());
+    //     // if (!amazonDynamoDBEndpoint.isEmpty()) {
+    //     //     amazonDynamoDB.setEndpoint(amazonDynamoDBEndpoint);
+    //     // }
+    //     // return amazonDynamoDB;
+    //     return AmazonDynamoDBClientBuilder.standard()
+    //     .withCredentials(getCredentialsProvider())
+    //     .withEndpointConfiguration(getEndpointConfiguration(amazonDynamoDBEndpoint))
+    //     .build();
+    // }
+
+    @Bean
+    @Primary
     public AmazonDynamoDB amazonDynamoDB() {
-        // AmazonDynamoDB amazonDynamoDB = new AmazonDynamoDBClient(amazonAWSCredentials());
-        // if (!amazonDynamoDBEndpoint.isEmpty()) {
-        //     amazonDynamoDB.setEndpoint(amazonDynamoDBEndpoint);
-        // }
-        // return amazonDynamoDB;
         return AmazonDynamoDBClientBuilder.standard()
         .withCredentials(getCredentialsProvider())
         .withEndpointConfiguration(getEndpointConfiguration(amazonDynamoDBEndpoint))
         .build();
+    }
+
+    @Bean
+    @Primary
+    public DynamoDBMapper dynamoDBMapper(AmazonDynamoDB amazonDynamoDB,
+                                         DynamoDBMapperConfig config) {
+        return new DynamoDBMapper(amazonDynamoDB, config);
+    }
+
+    @Bean
+    @Primary
+    public DynamoDBMapperConfig dynamoDBMapperConfig() {
+        DynamoDBMapperConfig.Builder builder = new DynamoDBMapperConfig.Builder();
+        builder.setPaginationLoadingStrategy(DynamoDBMapperConfig.PaginationLoadingStrategy.LAZY_LOADING);
+        builder.setTypeConverterFactory(DynamoDBTypeConverterFactory.standard());
+        return builder.build();
+    }
+
+    @Bean
+    public DynamoDB dynamoDB(AmazonDynamoDB amazonDynamoDB)
+    {
+        return new DynamoDB(amazonDynamoDB);
     }
 
     @Bean
@@ -61,10 +98,10 @@ public class DynamoDBConfig {
         return new AWSStaticCredentialsProvider(getBasicAWSCredentials());
     }
 
-    @Bean(name = "mvcHandlerMappingIntrospectorCustom")
-    public HandlerMappingIntrospector mvcHandlerMappingIntrospectorCustom() {
-        return new HandlerMappingIntrospector(context);
-    }
+    // @Bean(name = "mvcHandlerMappingIntrospectorCustom")
+    // public HandlerMappingIntrospector mvcHandlerMappingIntrospectorCustom() {
+    //     return new HandlerMappingIntrospector(context);
+    // }
 
     private BasicAWSCredentials getBasicAWSCredentials() {
         return new BasicAWSCredentials(amazonAWSAccessKey, amazonAWSSecretKey);

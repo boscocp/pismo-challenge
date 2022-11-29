@@ -72,10 +72,8 @@ public class AccountRepositoryIntegrationTest {
     public void givenItemWithExpectedCost_whenRunFindAll_thenItemIsFound() {
         AccountId accountId = new AccountId("teste","metadata");
         Account account = new Account(accountId, EXPECTED_PRICE);
-        repository.save(account);
-
-        List<Account> result = (List<Account>) repository.findAll();
-        assertThat(result.size(), is(greaterThan(0)));
-        assertThat(result.get(0).getDocumentNumber(), is(equalTo(EXPECTED_PRICE)));
+        Account newAccount = repository.save(account);
+        
+        assertThat(newAccount.getDocumentNumber(), is(equalTo(EXPECTED_PRICE)));
     }
 }
