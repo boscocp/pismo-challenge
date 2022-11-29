@@ -1,6 +1,7 @@
 package com.pismo.api.handler;
 
 import com.pismo.dynamodb.repository.AccountRepository;
+import com.pismo.service.IAccountService;
 import com.pismo.dynamodb.models.AccountDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,21 +24,16 @@ import org.springframework.web.bind.annotation.*;
 public class AccountController {
 
     @Autowired
-    AccountRepository repository;
+    IAccountService service;
 
     @PostMapping("/account") //(value = "/account", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AccountDTO> createAccount(@RequestBody AccountDTO dto) {
-        AccountId accountId = new AccountId("teste","metadata");
-        Account account = new Account(accountId, dto.getDocumentNumber());
-        repository.save(account);
-        // Account account = new Account("123123", "teste");
-        // this.repository.save(account);
+        service.create(dto);
         return ResponseEntity.ok().body(dto);
     }
 
     @RequestMapping("/account")
-    public ResponseEntity<List<Account>> handle() {
-        List<Account> result = (List<Account>) repository.findAll();
-        return ResponseEntity.ok().body(result);
+    public ResponseEntity<List<AccountDTO>> handle() {
+        return ResponseEntity.ok().body(service.getAll());
     }
 }
