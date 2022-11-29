@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 // TODO mudar tudo pra estrutura da conta, implementar interface do servico, depois servico
@@ -18,29 +19,37 @@ import java.util.Map;
 @Service
 @Transactional
 public class OperationServiceImplementation implements IOperationService {
+    public static final Map<Integer, String> operations = new HashMap<>();
+    static {
+        operations.put(1, "Compra");
+        operations.put(2, "Compra parcelada");
+        operations.put(3, "Saque");
+        operations.put(4, "Pagamento");
+    }
+
     @Autowired
     AccountRepository repository;
 
     @Override
     public OperationDTO create(OperationDTO dto) {
-        Map<Integer,String> op = new HashMap<Integer,String>();
-        op.put(1, "Compra");
-        op.put( 2, "Compra parcelada");
-        op.put( 3, "Saque");
-        op.put( 4, "Pagamento");
+        LocalDateTime lt = LocalDateTime.now();
 
-        AccountId accountId = new AccountId(convertToSk(dto));
+        AccountId accountId = new AccountId(dto.getAccountId(), convertToSk(dto, lt.toString()));
         Account account = new Account(accountId,
-                "now-10-10-2022",
-                dto.getAmount().toString(),
-                op.get(dto.getOperationTypeId()),
+                lt.toString(),
+                computeAmount(dto, dto.getOperationTypeId()),
+                operations.get(dto.getOperationTypeId()),
                 dto.getOperationTypeId().toString());
         repository.save(account);
         return dto;
     }
 
-    private String convertToSk(OperationDTO dto) {
-        return "operation#".concat(dto.getOperationTypeId().toString());
+    private String computeAmount(OperationDTO dto, int operation) {
+        return operation == 4 ? dto.getAmount().toString() : "-".concat(dto.getAmount().toString());
+    }
+
+    private String convertToSk(OperationDTO dto, String now) {
+        return "operation_".concat(dto.getOperationTypeId().toString() + "#" + now);
     }
 
     @Override

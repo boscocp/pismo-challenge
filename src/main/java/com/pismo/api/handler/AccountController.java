@@ -24,8 +24,8 @@ public class AccountController {
     @Autowired
     IAccountService accountService;
 
-    // @Autowired
-    // IOperationService operationService;
+    @Autowired
+    IOperationService operationService;
 
 
     @Autowired
@@ -37,11 +37,11 @@ public class AccountController {
         return ResponseEntity.ok().body(dto);
     }
 
-    // @PostMapping("/account/operation")
-    // public ResponseEntity<OperationDTO> createOperation(@RequestBody OperationDTO dto) {
-    //     operationService.create(dto);
-    //     return ResponseEntity.ok().body(dto);
-    // }
+    @PostMapping("/account/operation")
+    public ResponseEntity<OperationDTO> createOperation(@RequestBody OperationDTO dto) {
+        operationService.create(dto);
+        return ResponseEntity.ok().body(dto);
+    }
 
     @RequestMapping("/account")
     public ResponseEntity<String> handle(@RequestBody String code) {
