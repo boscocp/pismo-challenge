@@ -5,6 +5,7 @@ import com.pismo.dynamodb.models.AccountDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pismo.dynamodb.entity.Account;
+import com.pismo.dynamodb.entity.AccountId;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 
@@ -26,8 +27,11 @@ public class AccountController {
 
     @PostMapping("/account") //(value = "/account", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AccountDTO> createAccount(@RequestBody AccountDTO dto) {
-        Account account = new Account("123123", "teste");
-        this.repository.save(account);
+        AccountId accountId = new AccountId("teste","metadata");
+        Account account = new Account(accountId, dto.getDocumentNumber());
+        repository.save(account);
+        // Account account = new Account("123123", "teste");
+        // this.repository.save(account);
         return ResponseEntity.ok().body(dto);
     }
 

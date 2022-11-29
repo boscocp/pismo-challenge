@@ -192,9 +192,9 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>com.github.derjust</groupId>
+            <groupId>io.github.boostchicken</groupId>
             <artifactId>spring-data-dynamodb</artifactId>
-            <version>5.0.4</version>
+            <version>5.2.5</version>
         </dependency>
         <!-- ================================================== -->
         <!-- DynamoDBLocal dependencies -->

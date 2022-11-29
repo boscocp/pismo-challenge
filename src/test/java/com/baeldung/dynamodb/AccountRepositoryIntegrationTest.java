@@ -6,6 +6,7 @@ import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 import com.amazonaws.services.dynamodbv2.model.ResourceInUseException;
 import com.pismo.Application;
 import com.pismo.dynamodb.entity.Account;
+import com.pismo.dynamodb.entity.AccountId;
 import com.pismo.dynamodb.repository.AccountRepository;
 import com.baeldung.dynamodb.rule.LocalDbCreationRule;
 import org.junit.Before;
@@ -20,6 +21,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.hamcrest.Matchers.greaterThan;
@@ -68,12 +70,12 @@ public class AccountRepositoryIntegrationTest {
 
     @Test
     public void givenItemWithExpectedCost_whenRunFindAll_thenItemIsFound() {
-
-        Account account = new Account(EXPECTED_COST, EXPECTED_PRICE);
+        AccountId accountId = new AccountId("teste","metadata");
+        Account account = new Account(accountId, EXPECTED_PRICE);
         repository.save(account);
 
         List<Account> result = (List<Account>) repository.findAll();
         assertThat(result.size(), is(greaterThan(0)));
-        assertThat(result.get(0).getDocumentNumber(), is(equalTo(EXPECTED_COST)));
+        assertThat(result.get(0).getDocumentNumber(), is(equalTo(EXPECTED_PRICE)));
     }
 }
