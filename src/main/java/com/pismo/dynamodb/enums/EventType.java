@@ -1,8 +1,18 @@
 package com.pismo.dynamodb.enums;
 
 public enum EventType {
-    PARCELING_PURCHASE,
-    PAYMENT,
-    WITHDRAW,
-    PURCHASE
+    PURCHASE("Compra"),
+    PARCELING_PURCHASE("Compra parcelada"),
+    WITHDRAW("Saque"),
+    PAYMENT("Pagamento");
+
+    private final String value;
+
+    EventType(String operationType) {
+        value = operationType;
+    }
+
+    public String getValue() {
+        return value;
+    }
 }

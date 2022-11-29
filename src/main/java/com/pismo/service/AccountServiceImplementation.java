@@ -25,7 +25,7 @@ public class AccountServiceImplementation implements IAccountService {
 
     @Override
     public AccountDTO create(AccountDTO dto) {
-        AccountId accountId = new AccountId("teste","metadata");
+        AccountId accountId = new AccountId("metadata#".concat(dto.getDocumentNumber()));
         Account account = new Account(accountId, dto.getDocumentNumber());
         repository.save(account);
         return dto;
@@ -39,15 +39,16 @@ public class AccountServiceImplementation implements IAccountService {
 
     @Override
     public List<AccountDTO> getAll(String code) {
-        List <AccountDTO> accountsDTO = new ArrayList<>();
-        for (Account element : repository.findAllById(code)) {
-            accountToDTO(accountsDTO, element);
-        }
-        return accountsDTO;
+        // List <AccountDTO> accountsDTO = new ArrayList<>();
+        // for (Account element : repository.findAllById(code)) {
+        //     accountToDTO(accountsDTO, element);
+        // }
+        // return accountsDTO;
+        return null;
     }
 
     private void accountToDTO(List <AccountDTO> accountsDTO, Account element) {
-        accountsDTO.add(new AccountDTO(element.getSk(), element.getDocumentNumber()));
+        // accountsDTO.add(new AccountDTO(element.getDocumentNumber()));
     }
 
     @Override

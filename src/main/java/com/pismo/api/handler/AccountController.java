@@ -2,7 +2,9 @@ package com.pismo.api.handler;
 
 import com.pismo.dynamodb.repository.AccountRepository;
 import com.pismo.service.IAccountService;
+import com.pismo.service.IOperationService;
 import com.pismo.dynamodb.models.AccountDTO;
+import com.pismo.dynamodb.models.OperationDTO;
 import com.pismo.dynamodb.entity.Account;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,16 +22,26 @@ import org.springframework.web.bind.annotation.*;
 public class AccountController {
 
     @Autowired
-    IAccountService service;
+    IAccountService accountService;
+
+    // @Autowired
+    // IOperationService operationService;
+
 
     @Autowired
     AccountRepository repository;
 
-    @PostMapping("/account") //(value = "/account", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping("/account")
     public ResponseEntity<AccountDTO> createAccount(@RequestBody AccountDTO dto) {
-        service.create(dto);
+        accountService.create(dto);
         return ResponseEntity.ok().body(dto);
     }
+
+    // @PostMapping("/account/operation")
+    // public ResponseEntity<OperationDTO> createOperation(@RequestBody OperationDTO dto) {
+    //     operationService.create(dto);
+    //     return ResponseEntity.ok().body(dto);
+    // }
 
     @RequestMapping("/account")
     public ResponseEntity<String> handle(@RequestBody String code) {
