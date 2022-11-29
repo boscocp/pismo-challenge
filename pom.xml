@@ -251,6 +251,13 @@
             <type>so</type>
             <scope>test</scope>
         </dependency>
+        <!-- documentatio -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>1.6.4</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -320,6 +327,7 @@
         <mockito.version>4.4.0</mockito.version>
         <sqlite4java.version>1.0.392</sqlite4java.version>
         <aws-java-sdk-dynamodb.version>1.11.64</aws-java-sdk-dynamodb.version>
+        <springfox-swagger.version>3.0.0</springfox-swagger.version>
     </properties>
 
 </project>

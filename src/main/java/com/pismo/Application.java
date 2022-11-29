@@ -13,3 +13,6 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 }
+
+// TODO expicacao readme
+// subir tudo com docker
