@@ -44,10 +44,8 @@ public class AccountController {
     }
 
     @RequestMapping("/account")
-    public ResponseEntity<String> handle(@RequestBody String code) {
-        String teste ="teste ".concat(repository.findAllById("teste").toString());
-        // System.out.println(repository.findAllById("teste"));
-        return ResponseEntity.ok().body(teste);
+    public ResponseEntity<List<Account>> handle(@RequestBody String code) {
+        return ResponseEntity.ok().body(repository.findAllById("teste"));
     }
 }
 

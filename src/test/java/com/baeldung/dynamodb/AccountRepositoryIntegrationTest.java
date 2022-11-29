@@ -74,6 +74,9 @@ public class AccountRepositoryIntegrationTest {
         Account account = new Account(accountId, EXPECTED_PRICE);
         Account newAccount = repository.save(account);
         
+        List<Account> result = (List<Account>) repository.findAll();
         assertThat(newAccount.getDocumentNumber(), is(equalTo(EXPECTED_PRICE)));
+        assertThat(result.get(0).getDocumentNumber(), is(equalTo(EXPECTED_PRICE)));
+        
     }
 }
