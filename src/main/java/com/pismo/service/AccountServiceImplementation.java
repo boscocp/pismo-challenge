@@ -1,6 +1,5 @@
 package com.pismo.service;
 
-import com.pismo.service.IAccountService;
 import com.pismo.dynamodb.repository.AccountRepository;
 import com.pismo.dynamodb.entity.Account;
 import com.pismo.dynamodb.entity.AccountId;
@@ -12,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 // TODO mudar tudo pra estrutura da conta, implementar interface do servico, depois servico
 
 
@@ -32,29 +30,29 @@ public class AccountServiceImplementation implements IAccountService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(String id) {
         // TODO Auto-generated method stub
         
     }
 
     @Override
-    public List<AccountDTO> getAll(String code) {
-        // List <AccountDTO> accountsDTO = new ArrayList<>();
-        // for (Account element : repository.findAllById(code)) {
-        //     accountToDTO(accountsDTO, element);
-        // }
-        // return accountsDTO;
-        return null;
+    public List<AccountDTO> getAll() {
+        List <AccountDTO> accountsDTO = new ArrayList<>();
+        for (Account element : repository.findAll()) {
+            accountToDTO(accountsDTO, element);
+        }
+        return accountsDTO;
     }
 
     private void accountToDTO(List <AccountDTO> accountsDTO, Account element) {
-        // accountsDTO.add(new AccountDTO(element.getDocumentNumber()));
+        if(element.getDocumentNumber() != null)
+            accountsDTO.add(new AccountDTO(element.getDocumentNumber()));
     }
 
     @Override
-    public AccountDTO getById(Long id) {
-        // TODO Auto-generated method stub
-        return null;
+    public AccountDTO getById(String id) {
+        List<Account> accounts =  repository.findAllByIdAndSkStartsWith(id, "metadata");
+        return new AccountDTO(accounts.get(0).getDocumentNumber());
     }
 
     @Override

@@ -11,10 +11,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 // TODO mudar tudo pra estrutura da conta, implementar interface do servico, depois servico
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -37,8 +39,8 @@ public class OperationServiceImplementation implements IOperationService {
         AccountId accountId = new AccountId(dto.getAccountId(), convertToSk(dto, lt.toString()));
         Account account = new Account(accountId,
                 lt.toString(),
-                computeAmount(dto, dto.getOperationTypeId()),
                 operations.get(dto.getOperationTypeId()),
+                computeAmount(dto, dto.getOperationTypeId()),
                 dto.getOperationTypeId().toString());
         repository.save(account);
         return dto;
@@ -59,9 +61,21 @@ public class OperationServiceImplementation implements IOperationService {
     }
 
     @Override
-    public List<OperationDTO> getAll(String code) {
-        // TODO Auto-generated method stub
-        return null;
+    public List<OperationDTO> getAll(String id) {
+        List<OperationDTO> operationsDTO = new ArrayList<>();
+        for (Account element : repository.findAllByIdAndSkStartsWith(
+                id,
+                "operation")) {
+            operationToDTO(operationsDTO, element);
+        }
+        return operationsDTO;
+    }
+
+    private void operationToDTO(List<OperationDTO> operationsDTO, Account element) {
+        operationsDTO.add(new OperationDTO(
+            Integer.parseInt(element.getOperationType()), 
+            element.getId(), 
+            Float.parseFloat(element.getAmount())));
     }
 
     @Override

@@ -13,8 +13,8 @@ import com.pismo.dynamodb.entity.AccountId;
 @EnableScan
 @Repository
 public interface AccountRepository extends CrudRepository<Account, AccountId> {
-    List<Account> findAllById(String code);
+    List<Account> findAllById(String id);
 
-    List<Account> findAllByIdAndSkStartsWith(String code, 
-        String eventType);
+    List<Account> findAllByIdAndSkStartsWith(String id, 
+        String sk);
 }

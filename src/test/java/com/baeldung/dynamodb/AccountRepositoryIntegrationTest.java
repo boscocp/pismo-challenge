@@ -75,8 +75,13 @@ public class AccountRepositoryIntegrationTest {
         Account newAccount = repository.save(account);
         
         List<Account> result = (List<Account>) repository.findAll();
+        List<Account> result2 = (List<Account>) repository.findAllById("teste");
+        List<Account> result3 = (List<Account>) repository.findAllByIdAndSkStartsWith("teste","metadata");
         assertThat(newAccount.getDocumentNumber(), is(equalTo(EXPECTED_PRICE)));
         assertThat(result.get(0).getDocumentNumber(), is(equalTo(EXPECTED_PRICE)));
+        assertThat(result2.size(), is(greaterThan(0)));
+        assertThat(result2.get(0).getDocumentNumber(), is(equalTo(EXPECTED_PRICE)));
+        assertThat(result3.get(0).getDocumentNumber(), is(equalTo(EXPECTED_PRICE)));
         
     }
 }

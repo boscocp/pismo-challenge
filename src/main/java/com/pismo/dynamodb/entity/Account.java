@@ -63,7 +63,7 @@ public class Account {
         this.documentNumber = documentNumber;
     }
 
-    @DynamoDBHashKey
+    @DynamoDBHashKey(attributeName = "id")
     public String getId() {
         return this.accountId != null
                 ? this.accountId.getId()
