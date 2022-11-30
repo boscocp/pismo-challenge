@@ -1,5 +1,5 @@
-FROM adoptopenjdk:11-jre-hotspot
-ARG JAR_FILE=account*.jar
-EXPOSE 4200
-COPY target/${JAR_FILE} application.jar
-ENTRYPOINT ["java", "-jar", "application.jar"]
+FROM maven:3.6.3-jdk-11-openj9
+COPY ./ ./
+RUN mvn clean package
+COPY target/account-0.1.0-SNAPSHOT.jar application.jar
+ENTRYPOINT ["java","-jar","/application.jar"]

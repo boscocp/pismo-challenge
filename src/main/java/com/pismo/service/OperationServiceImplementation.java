@@ -4,7 +4,6 @@ import com.pismo.dynamodb.repository.AccountRepository;
 import com.pismo.dynamodb.entity.Account;
 import com.pismo.dynamodb.entity.AccountId;
 import com.pismo.dynamodb.models.OperationDTO;
-import com.pismo.dynamodb.enums.EventType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,9 +13,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-// TODO mudar tudo pra estrutura da conta, implementar interface do servico, depois servico
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional

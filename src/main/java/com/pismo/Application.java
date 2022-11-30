@@ -16,3 +16,6 @@ public class Application {
 
 // TODO expicacao readme
 // subir tudo com docker
+// melhorar testes de integracao
+// refatorar e limpar codigo
+// por lambda se for o caso

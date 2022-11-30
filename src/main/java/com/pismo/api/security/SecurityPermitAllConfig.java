@@ -9,7 +9,8 @@ import org.springframework.security.web.firewall.HttpStatusRequestRejectedHandle
 import org.springframework.security.web.firewall.RequestRejectedHandler;
 import org.springframework.security.web.firewall.StrictHttpFirewall;
 
-
+// TODO: mudar para SecurityConfiguration SecurityFilterChain
+// link: https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter
 @Configuration
 public class SecurityPermitAllConfig extends WebSecurityConfigurerAdapter {
 

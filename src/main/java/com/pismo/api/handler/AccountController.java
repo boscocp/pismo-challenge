@@ -5,13 +5,10 @@ import com.pismo.service.IAccountService;
 import com.pismo.service.IOperationService;
 import com.pismo.dynamodb.models.AccountDTO;
 import com.pismo.dynamodb.models.OperationDTO;
-import com.pismo.dynamodb.entity.Account;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;

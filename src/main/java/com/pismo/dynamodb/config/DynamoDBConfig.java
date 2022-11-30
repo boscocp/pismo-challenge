@@ -7,14 +7,12 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
@@ -40,19 +38,6 @@ public class DynamoDBConfig {
 
     @Autowired
     private ApplicationContext context;
-
-    // @Bean(name = "amazonDynamoDB")
-    // public AmazonDynamoDB amazonDynamoDB() {
-    //     // AmazonDynamoDB amazonDynamoDB = new AmazonDynamoDBClient(amazonAWSCredentials());
-    //     // if (!amazonDynamoDBEndpoint.isEmpty()) {
-    //     //     amazonDynamoDB.setEndpoint(amazonDynamoDBEndpoint);
-    //     // }
-    //     // return amazonDynamoDB;
-    //     return AmazonDynamoDBClientBuilder.standard()
-    //     .withCredentials(getCredentialsProvider())
-    //     .withEndpointConfiguration(getEndpointConfiguration(amazonDynamoDBEndpoint))
-    //     .build();
-    // }
 
     @Bean
     @Primary
@@ -97,11 +82,6 @@ public class DynamoDBConfig {
     private AWSStaticCredentialsProvider getCredentialsProvider() {
         return new AWSStaticCredentialsProvider(getBasicAWSCredentials());
     }
-
-    // @Bean(name = "mvcHandlerMappingIntrospectorCustom")
-    // public HandlerMappingIntrospector mvcHandlerMappingIntrospectorCustom() {
-    //     return new HandlerMappingIntrospector(context);
-    // }
 
     private BasicAWSCredentials getBasicAWSCredentials() {
         return new BasicAWSCredentials(amazonAWSAccessKey, amazonAWSSecretKey);
