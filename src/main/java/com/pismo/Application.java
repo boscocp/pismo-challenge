@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
 @EnableDynamoDBRepositories
-// @ComponentScan(basePackages = { "com.pismo" })
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
