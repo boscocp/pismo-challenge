@@ -20,7 +20,8 @@ aws --endpoint-url=http://localhost:4566 --region=us-east-1 dynamodb scan --tabl
 
 Usar o id gerado para poder usar método POST de criar operação.
 
-A tabela foi projetada para poder futuramente filtar por tipo de operacao e se precisar por data também. Dependendo da necessidade daria para implementar índices globais para facilitar e melhorar a performance das consultas.
+A tabela foi projetada para poder futuramente filtar por tipo de operacao e se precisar por data também. Dependendo da necessidade daria para implementar índices globais para facilitar e melhorar a performance das consultas. Imagem do projeto:
+![alt text](https://github.com/boscocp/pismo-challenge/blob/main/tabela-pismo.png?raw=true)
 
 Os testes de integração foram feitos usando JUnit e mocking do banco DynamoDB.
 Pela simplicidade das chamadas não foram feitos testes unitários.
