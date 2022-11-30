@@ -1,6 +1,6 @@
 # pismo-challenge
 Desafio pismo 
-Tecnologias usadas: Java Spring Boot, DynamoDB, Docker, Swagger2. Foi utilizado o projeto base da Baeldung: https://www.baeldung.com/spring-data-dynamodb
+Tecnologias utilizadas: Java Spring Boot, DynamoDB, Docker, Swagger2. Foi utilizado o projeto base da Baeldung: https://www.baeldung.com/spring-data-dynamodb
 
 DynamoDB rodando local com docker compose.
 Docker da imagem java - incompeto.
@@ -20,7 +20,7 @@ aws --endpoint-url=http://localhost:4566 --region=us-east-1 dynamodb scan --tabl
 
 Usar o id gerado para poder usar método POST de criar operação.
 
-A tabela foi projetada para poder futuramente filtar por tipo de operacao e se precisar por data também. Dependendo da necessidade daria para implementar índices globais para facilitar e melhorar a performance das consultas. Imagem do projeto:
+A tabela foi projetada para poder futuramente filtrar por tipo de operacao e se precisar por data também. Dependendo da necessidade daria para implementar índices globais para facilitar e melhorar a performance das consultas. Imagem do projeto da tabela:
 ![alt text](https://github.com/boscocp/pismo-challenge/blob/main/tabela-pismo.png?raw=true)
 
 Os testes de integração foram feitos usando JUnit e mocking do banco DynamoDB.
