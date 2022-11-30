@@ -1,0 +1,7 @@
+config:
+  aws:
+    region: us-east-1
+    dynamodb:
+      url: http://localhost:4566
+      access-key: 123456
+      secret-key: 123456
